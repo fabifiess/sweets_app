@@ -1,0 +1,328 @@
+/* ----------------- Form Elements ----------------- */
+
+html, body {
+    font-family: 'HelveticaNeueLTCom-Th', sans-serif;
+    src: url("../fonts/HelveticaNeueLTCom-Th.ttf");
+    font-size: 15px;
+}
+
+.formlabel {
+    vertical-align: top;
+    /*padding-top: 23px;*/
+    padding-right: 20px;
+    padding-bottom:18px;
+    padding-top:7px;
+    width:150px;
+}
+
+
+
+input[type=text]{
+    /*margin-bottom: -20px;*/
+    padding: 6px 9px 6px 12px;
+    width: 430px;
+    border: 1px solid #000;
+    border-radius: 20px;
+    text-align: center;
+    font-size:15px;
+    alignment: top;
+}
+
+input[type=text]:focus, #submit_add:focus{
+    outline-width: 0; /* remove blue border when input is focussed */
+    border-width: 2px;
+    border-color: #777;
+}
+
+textarea {
+    padding: 6px 4px;
+    padding-left: 12px;
+    height: 100px;
+    width: 305px;
+    border: 1px solid #000;
+    overflow: auto;
+    border-radius: 20px;
+}
+
+textarea:focus {
+    outline-width: 0; /* remove blue border when input is focussed */
+    border-width: 2px;
+    border-color: #555;
+}
+
+
+
+
+/* "+" - Button */
+
+#add{
+    font-size:20px;
+    cursor:default;
+}
+
+#add:hover {
+    border-color:#666;
+    color: #666;
+}
+
+#add:active {
+    border-color:#db0031;
+    color: #db0031;
+}
+
+
+
+/* File Upload Button */
+
+
+
+input[type="file"] {
+    display: none;
+}
+.standardbtn {
+    /*margin-bottom: -28px;*/
+    /*margin-top:0px;*/
+    margin-right: 25px;
+    border: 1px solid #000;
+    padding: 6px 15px 6px 15px;
+    border-radius:20px;
+    cursor: default;
+    color: #000;
+    background-color: #fff;
+    alignment: center;
+    text-align: center;
+    font-size:15px;
+}
+.standardbtn:hover {
+    color: #666;
+    border-color: #666;
+}
+
+.standardbtn:active {
+    color: #db0031;
+    border-color: #db0031;
+}
+
+.glyphicon-refresh {
+    /*margin-bottom: -28px;*/
+    /*margin-top:0px;*/
+    /*margin-right: 25px;*/
+    margin-left:5px;
+    /*border: 1px solid #000;*/
+    padding: 6px 15px 6px 15px;
+    border-radius:20px;
+    cursor: default;
+    color: #000;
+    background-color: #fff;
+    alignment: center;
+    text-align: center;
+    font-size:15px;
+}
+
+.glyphicon-refresh:hover{
+    color: #666;
+}
+
+.glyphicon-refresh:active{
+    color: #db0031;
+}
+
+/* Visual feedback for update operations */
+
+.glyphicon-ok{
+    margin-left:5px;
+    /*border: 1px solid #000;*/
+    padding: 6px 15px 6px 15px;
+    border-radius:20px;
+    cursor: default;
+    color: #1cb100;
+    background-color: #fff;
+    alignment: center;
+    text-align: center;
+    font-size:15px;
+}
+
+.glyphicon-remove{
+    margin-left:5px;
+    /*border: 1px solid #000;*/
+    padding: 6px 15px 6px 15px;
+    border-radius:20px;
+    cursor: default;
+    color: #db0031;
+    background-color: #fff;
+    alignment: center;
+    text-align: center;
+    font-size:15px;
+}
+
+
+/* Visual preview, add, delete panel */
+
+#visuals_table{
+}
+
+
+
+.container{
+    position:relative;
+    /*display:flex;*/
+    /*width: 300px;*/
+}
+
+.fileupload_show{
+    top:20px;
+    position:absolute;
+    margin:0px 0px 15px 0px;
+    z-index: 2;
+}
+
+/* Delete icon on visual preview */
+
+.delete{
+    position:absolute;
+    padding: 6px 6px 6px 6px;
+    margin: 27px 0px 0px 10px;
+    background-color: #fff;
+    border: solid 1px #000;
+    color: #000;
+    font-size:13px;
+    cursor:default;
+    z-index: 3;
+}
+
+.delete:hover{
+    color: #fff;
+    background-color: #000;
+    border-color: #fff;
+}
+
+.delete:active{
+    color: #fff;
+    background-color: #db0031;
+    border-color: #fff;
+}
+
+
+/* Link icon on visual preview */
+
+.linkVisual{
+    position:absolute;
+    padding: 6px 6px 6px 6px;
+    margin: 27px 0px 0px 45px;
+    background-color: #fff;
+    border: solid 1px #000;
+    border-radius: 20px;
+    color: #000;
+    font-size:13px;
+    cursor:default;
+    /*position: absolute;*/
+    z-index: 3;
+}
+
+
+.linkVisual:hover{
+    color: #fff;
+    background-color: #000;
+    border-color: #fff;
+}
+
+.linkVisual:active{
+    color: #fff;
+    background-color: #db0031;
+    border-color: #fff;
+}
+
+.linkpanel{
+    position:relative;
+    margin-top:125px;
+}
+
+.linkdropdown{
+    z-index: 15;
+}
+
+.vjs-control-bar{ /* othrwise invisible control links of the video player overlay the dropdown */
+    display:none;
+}
+
+.glyphicon-plus{
+    /*position:relative;*/
+    color: #000;
+    font-size: 15px;
+    margin-top:58px;
+    margin-left:20px;
+}
+
+.glyphicon-plus:hover{
+    color: #666;
+}
+
+.glyphicon-plus:active{
+    color: #db0031;
+}
+
+
+
+.glyphicon-arrow-right{
+    color:#000;
+    font-size:15px;
+    margin-top:58px;
+    margin-left:20px;
+}
+.glyphicon-arrow-right:hover{
+    color:#666;
+}
+.glyphicon-arrow-right:active{
+    color:#1cb100;
+}
+
+
+
+
+
+
+
+#submit_add, #update_saveVisual_submit{
+    padding: 8px 16px 8px 16px;
+    background-color: #000;
+    color: #fff;
+    border:none;
+    border-radius:20px;
+    font-size: 15px;
+    cursor:default;
+    display: inline-block;
+}
+
+#submit_add:hover, #update_saveVisual_submit:hover {
+    background-color: #666;
+}
+
+#submit_add:active, #update_saveVisual_submit:active {
+    background-color: #db0031; /* ICT Rot */
+}
+
+
+
+
+
+    /*border: 1px solid #1cb100; /!* grün *!/*/
+
+
+/* Anhang-Button */
+
+.addMultipleVisuals{
+    font-size: 15px;
+    margin: 10px 25px 0px 20px;
+    top:0px;
+    cursor: default;
+    color: #000;
+    /*text-align: center;*/
+}
+
+.addMultipleVisuals:hover {
+    color: #666;
+}
+
+.addMultipleVisuals:active {
+    color: #db0031;
+}

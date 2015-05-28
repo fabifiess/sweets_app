@@ -1,0 +1,74 @@
+<table id="maincontent_table">
+    <tr>
+        <td id="maincontent_caption">Upload Form</td>
+    </tr>
+    <tr>
+        <td id="maincontent_table_left">
+            <!--Data Form-->
+            <form method="post" action="/upload" enctype="multipart/form-data">
+                <table>
+                    <tr>
+                        <td class="formlabel">Name</td>
+                        <td><input type="text" id="description" name="description" placeholder="Name"></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Beispiele</td>
+                        <td><input type="text" id="examples" name="examples" placeholder="Beispiele"></td>
+                    </tr>
+
+                    <!--Textarea-->
+
+                    <!--<tr>-->
+                    <!--<td class="formlabel"> Beschreibung</td>-->
+                    <!--<td><p><textarea id="comments" name="comments" placeholder="Beschreibung"></textarea></p></td>-->
+                    <!--</tr>-->
+
+                    <tr style="margin-top:24px;">
+                        <td class="formlabel">Visuals</td>
+                        <td>
+                            <label for="fileupload01" id="filelabel" class="glyphicon glyphicon-plus addMultipleVisuals"></label>
+                            <input type="file" id="fileupload01" name="img0"/>
+                            <span id="add" class="glyphicon glyphicon-option-horizontal"></span>
+                        </td>
+                    </tr>
+                    <tr> <td><input type="submit" id="submit_add" value="Speichern"></td> </tr>
+                </table>
+            </form>
+        </td>
+        <td id="maincontent_table_right">
+        </td>
+    </tr>
+</table>
+
+<script>
+
+    var addcounter = 1;
+    $("#add").unbind("click").click(function () {
+        //Create a new select box
+        $('#filelabel').clone(true).attr('for','img'+addcounter).insertBefore($('#add'));
+        $('#fileupload01').clone(true).attr({id: "img" + addcounter, name: "img" + addcounter}).insertBefore($('#add'));
+        addcounter++;
+    });
+
+
+//    validateIt
+
+    $('#submit_add').hide();
+    $("#submit_add").prop('disabled', true);
+    $('#description').css("border-color", "#000");
+
+    $("#description").keyup(function () {
+        validateIt($("#description"));
+        if(validateIt($("#description")) == false) {
+            $("#submit_add").prop('disabled', true);
+            $('#submit_add').fadeOut("500");
+        }
+        else {
+            $("#submit_add").prop('disabled', false);
+            $('#submit_add').fadeIn("500");
+        }
+    });
+
+
+
+</script>

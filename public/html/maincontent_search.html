@@ -1,0 +1,69 @@
+<table id="maincontent_table">
+    <tr>
+        <td id="maincontent_caption" class="fade_content">Choose sweet</td>
+    </tr>
+    <tr>
+        <td id="maincontent_table_left">
+            <!-- By selecting an item in this dropdown menu, the content of the page will be loaded dynamically-->
+            <p><select id="dropdown" class="dropdownlabel"> </select></p>
+            <!-- Placeholder for text-->
+            <p>
+
+            <div id="text" class="fade_content"></div>
+            </p>
+            <p>
+
+            <div id="log"></div>
+            <!-- delete -->
+            <!-- Socket-IO Msg -->
+            <ul id="messages"></ul>
+            <!-- delete -->
+            </p>
+        </td>
+        <td id="maincontent_table_right">
+            <!-- Placeholder for a dynamically loaded image (picture or video) when an item of'#dropdown' is selected -->
+            <div id="visuals_container" class="fade_content"></div>
+        </td>
+    </tr>
+</table>
+
+<script>
+    loadDropdown($('#dropdown'),"sweets.json", null);
+    /*
+     When an item in the dropdown menu is selected the content of the page will be loaded
+     */
+    $('#dropdown').unbind("change").change(function fetchData() {
+        videocounter = 0;
+        var selectedItem = $(this).val();                              // Text des gewählten Dropdownitems lesen
+        // --> SELECT description FROM sweets WHERE name=content
+        $.getJSON("../json/sweets.json", function fetchRows(data) {        // JSON-Datei laden (RDBMS: FROM sweets)
+            $.each(data, function fetchFields() {                          // Für jeden Datensatz.. (RDBMS: Für jede Zeile)
+                if (this.description == selectedItem) {                    // Finde das JSON-Objekt (RDBMS: "Datensatz"), zu dem das angeklickte item gehört (RDBMS:
+                    // WHERE name = content)
+                    $('.fade_content').empty();
+                    //$('.fade_content').fadeOut("fast", function showContent() {         // Blende den alten Content aus
+                    $('#maincontent_caption').text(this.description);                   // Wähle einen bestimmten Teil des JSON-Objektes
+                    // und verarbeite es (RDBMS: SELECT examples)
+                    $("#text").html(this.examples);                        // Ebenso mit der Description
+//                    socket.emit('chat message', "sweets_id= " + this.sweets_id);
+                    for (var i = 0; i < this.visuals.length; i++) {
+//                        socket.removeAllListeners();-
+//                        socket.on('chat message', function (msg) {
+//                            $('#messages').append($('<li>').text("Received from socketio: " + msg));
+//                        });
+//                        $('#messages').append("<li>Visuals-Array: " + this.visuals[i].img + "</li>");
+                        var newNode = document.createElement('div');
+                        newNode.setAttribute('id', 'visual_' + i);
+                        $('#visuals_container').append(newNode);
+                        pictureOrVideo(newNode, this.visuals[i].img);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+<!--Main Script-->
+<script type="text/javascript" src="../js/main.js"></script>
+</html>

@@ -1,0 +1,38 @@
+/* ganz oben links beginnen */
+html, body {
+    margin: 0;
+    height: 100%; /* !! */
+    width: 100%; /* !! */
+    overflow-x: hidden;
+    font-size: 18px; /* !! */
+}
+
+#sidebarcontainer {
+    position: absolute;
+    width: 360px;
+    background: #777;
+    float: left;
+    top: 0;
+    z-index: 2;
+}
+
+#navicon {
+    /* working nav bar icon */
+    top: 0;
+    left: 0;
+    width: 40px;
+    margin-left: 22px;
+    margin-top: 8px;
+    font-size: 25pt;
+    z-index: 5; /*höhere Zahl : weiter nach vorne rücken*/
+    cursor: default;
+    position: fixed;
+}
+
+#navicon:hover {
+    color: #fff;
+}
+
+#navicon:active {
+    color: #db0031;
+}

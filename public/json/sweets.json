@@ -1,0 +1,62 @@
+[
+  {
+    "sweets_id": 1,
+    "description": "Bubble Gum",
+    "examples": "Hubba Bubba, Wrigleys, Orbit",
+    "visuals": [
+      {
+        "visuals_id": 1,
+        "img": "Kaugummis.mp4"
+      },
+      {
+        "visuals_id": 3,
+        "img": "Mint_Dragees.mp4"
+      }
+    ]
+  },
+  {
+    "sweets_id": 2,
+    "description": "Chocolate",
+    "examples": "Milka, Ritter Sport, Lindt",
+    "visuals": [
+      {
+        "visuals_id": 4,
+        "img": "Milka.jpg"
+      },
+      {
+        "visuals_id": 5,
+        "img": "Ritter.mp4"
+      }
+    ]
+  },
+  {
+    "sweets_id": 3,
+    "description": "Bonbons",
+    "examples": "TicTac, Nimm2",
+    "visuals": [
+      {
+        "visuals_id": 2,
+        "img": "TicTac.jpg"
+      },
+      {
+        "visuals_id": 6,
+        "img": "Nimm2.jpg"
+      }
+    ]
+  },
+  {
+    "sweets_id": 4,
+    "description": "Jelly Bears",
+    "examples": "Trolli, Haribo, Katjes",
+    "visuals": [
+      {
+        "visuals_id": 7,
+        "img": "Gummibärchen.jpg"
+      },
+      {
+        "visuals_id": 8,
+        "img": "Trolli.mp4"
+      }
+    ]
+  }
+]

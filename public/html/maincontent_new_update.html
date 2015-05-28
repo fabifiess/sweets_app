@@ -1,0 +1,306 @@
+<table id="maincontent_table" style="table-layout: fixed;width:1000px;">
+    <tr>
+        <td id="maincontent_caption">Einträge ändern</td>
+    </tr>
+    <tr>
+        <td id="maincontent_table_left">
+
+            <p><select id="dropdown" class="dropdownlabel"> </select></p>
+
+            <table class="updatepanel">
+                <tr>
+                    <td class="formlabel">Name</td>
+
+                    <td><input type="text" id="description" placeholder="Name"></td>
+                    <td><span id="update_description" class="top glyphicon glyphicon-refresh" data-original-title="aktualisieren"></span></td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Beispiele</td>
+                    <td><input type="text" id="examples" placeholder="Beispiele"></td>
+                    <td><span id="update_examples" class="bottom glyphicon glyphicon-refresh" data-original-title="aktualisieren"></span></td>
+                </tr>
+            </table>
+
+            <table class="updatepanel">
+                <tr>
+                    <td class="formlabel">Visuals</td>
+                    <td>
+                        <div id="visuals_container" ></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $(".updatepanel").hide();
+        loadDropdown($('#dropdown'),"sweets.json",null);
+    });
+    /*
+     When an item in the dropdown menu is selected the content of the page will be loaded
+     */
+    $('#dropdown').unbind("change").change(fetchData);
+    function fetchData() {
+        videocounter = 0;
+        var selectedItem = $(this).val();                              // Text des gewählten Dropdownitems lesen
+        // --> SELECT description FROM sweets WHERE name=content
+        $.getJSON("../json/sweets.json", function fetchRows(data) {        // JSON-Datei laden (RDBMS: FROM sweets)
+            $.each(data, function fetchFields() {                          // Für jeden Datensatz.. (RDBMS: Für jede Zeile)
+                if (this.description == selectedItem) {                    // Finde das JSON-Objekt (RDBMS: "Datensatz"), zu dem das angeklickte item gehört (RDBMS:
+                    $('#description').val(this.description);                   // Wähle einen bestimmten Teil des JSON-Objektes
+                    $('#examples').val(this.examples);
+                    id_1 = this.sweets_id;
+                    $('#fileupload_show').empty();
+//                    $('#maincontent_caption').text(this.description);                   // Wähle einen bestimmten Teil des JSON-Objektes
+                    // Create HTML table for visuals
+                    $('#visuals_container').empty();
+                    var visuals_table = document.createElement('table');
+                    document.getElementById('visuals_container').appendChild(visuals_table);
+                    visuals_table.setAttribute('id','visuals_table');
+
+
+
+                    var visuals_tr = document.createElement('tr');
+                    visuals_table.appendChild(visuals_tr);
+                    visuals_tr.setAttribute("class", "allVisuals_tr");
+
+
+                    // For each visual
+                    for (var i = 0; i < this.visuals.length; i++) {
+                        // create new column
+                        var visual_td = document.createElement('td');
+                        visuals_tr.appendChild(visual_td);
+                        visual_td.setAttribute("id", "container" + i); // ID needed for deleting container
+                        visual_td.setAttribute("class", "container");
+                        // create delete button
+                        var deleteVisual_div = document.createElement('span');
+                        visual_td.appendChild(deleteVisual_div);
+                        deleteVisual_div.setAttribute("class", "glyphicon glyphicon-remove delete"); // for CSS
+                        deleteVisual_div.setAttribute("id_1", id_1); //z.B. 1
+                        deleteVisual_div.setAttribute("id_n", this.visuals[i].visuals_id); //z.B. 1 (ID of images inserted into table)
+                        deleteVisual_div.setAttribute("btn_type","deleteVisual");
+                        // Create link button
+                        var linkVisual_div = document.createElement('span');
+                        visual_td.appendChild(linkVisual_div);
+                        linkVisual_div.setAttribute("class", "glyphicon glyphicon-link linkVisual"); // for CSS
+                        linkVisual_div.setAttribute("id_1_existing", id_1); //z.B. 1
+                        linkVisual_div.setAttribute("id_n", this.visuals[i].visuals_id); //z.B. 1 (ID of images inserted into table)
+                        linkVisual_div.setAttribute("btn_type","linkVisual");
+                        linkVisual_div.setAttribute("container_nr",i);
+                        // create visual preview
+                        var visual_div = document.createElement('div');
+                        visual_td.appendChild(visual_div);
+                        visual_div.setAttribute("class", "fileupload_show");
+                        visual_div.setAttribute("id", "visual_preview_"+i);
+                        var mini = true;
+                        pictureOrVideo(visual_div, this.visuals[i].img, mini);
+                    }
+                    // append new visual: Button 2 in 1
+                    var new_visual_td = document.createElement('td');
+                    visuals_tr.appendChild(new_visual_td);
+                    new_visual_td.setAttribute("class", "container");
+
+                    var new_visual_form = document.createElement('form');
+                    new_visual_td.appendChild(new_visual_form);
+                    new_visual_form.setAttribute("method","post");
+                    new_visual_form.setAttribute("action","/addVisual");
+                    new_visual_form.setAttribute("enctype","multipart/form-data");
+                    new_visual_form.innerHTML=
+                            '<label id="label1" for="file1" class="glyphicon glyphicon-plus"></label>'+
+                            '<input type="file" id="file1" style="display:none" name="visual"/>'+
+                            '<input type="hidden" name="id_1" value="'+id_1+'"/>'+
+                            '<input type="submit" id="submit1" style="display:none"/>';
+                    $("#file1").change(function () {
+                        if ($("#file1").val() == "") {
+                            alert("No file selected");
+                        }
+                        else {
+                            // File chosen
+                            var fileChooseBtn = document.getElementById("label1");
+                            fileChooseBtn.removeAttribute("for");
+                            fileChooseBtn.setAttribute("for","submit1");
+                            fileChooseBtn.removeAttribute("class");
+                            fileChooseBtn.setAttribute("class","glyphicon glyphicon-arrow-right");
+                        }
+                    });     // The next click on the label will submit the form
+                }
+                $(".updatepanel").show();
+            });
+
+            var id_1_existing = [];
+
+            $('.allVisuals_tr').unbind("click").on('click', 'span', function (e) {
+                // Delete visuals by click
+                if(e.target.getAttribute("btn_type")=="deleteVisual"){
+                    var deleteVisual = {
+                        id_1: e.target.getAttribute("id_1"),
+                        id_n: e.target.getAttribute("id_n")
+                    }
+                    socket.removeAllListeners();
+                    socket.emit('delete', deleteVisual);
+                    socket.on('delete', function (msg) {
+                        if (msg == "ready") {
+                            $('#' + e.target.parentNode.id).fadeOut("slow"); // get the ID of the surrounding container element and delete it
+                        }
+                    });
+                }
+                // Link a visual to another category
+                else if(e.target.getAttribute("btn_type")=="linkVisual"){
+                    var container_nr = e.target.getAttribute("container_nr");
+                    $('.linkpanel').fadeOut(300);
+                    var container = document.getElementById("container"+container_nr);
+                    var linkpanel = document.createElement("div");
+                    container.appendChild(linkpanel);
+                    linkpanel.setAttribute("id","linkpanel_"+container_nr);
+                    linkpanel.setAttribute("class","linkpanel");
+                    linkpanel.innerHTML="<p>verlinken mit ...</p>";
+                    var linkdropdown = document.createElement("select");
+                    linkpanel.appendChild(linkdropdown);
+                    linkdropdown.setAttribute("id","linkdropdown_"+container_nr);
+                    linkdropdown.setAttribute("class","dropdownlabel");
+
+
+                    add2Array(id_1_existing, e.target.getAttribute("id_1_existing"));
+
+                    loadDropdown(linkdropdown,"sweets.json", id_1_existing);
+
+                    linkdropdown.onchange = function(){
+                        var selectedItem = $(this).val();             // Text des gewählten Dropdownitems lesen
+                        $.getJSON("../json/sweets.json", function (data) {        // JSON-Datei laden (RDBMS: FROM sweets)
+                            $.each(data, function fetchFields() {       // Für jeden Datensatz.. (RDBMS: Für jede Zeile)
+                                if (this.description == selectedItem) {
+//                                    id_1_existing.push(this.sweets_id);
+                                    add2Array(id_1_existing,this.sweets_id);
+
+                                              socket.removeAllListeners();
+                                    var linkVisual = {                        // data for bridge table (sweets_visuals)
+                                        id_1: this.sweets_id,                   // for colomn sweets_id
+                                        id_n: e.target.getAttribute("id_n")     // for column visuals_id
+                                    }
+
+
+                                    socket.emit('linkVisual', linkVisual);
+                                    socket.on('linkVisual', function (msg) {
+                                        if (msg == "ready") {
+                                            linkdropdown.setAttribute("style","background-color:#1cb100");
+                                            console.log("database query successful");
+                                        }
+                                        else if (msg == "fail") {
+                                            linkdropdown.setAttribute("style","background-color:#db0031");
+                                            console.log("Did not insert. Maybe duplicate.");
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+        });
+    }
+    // Validation
+    $("#description").keyup(function () {
+        validateIt($("#description"));
+    });
+    // Update Description Button
+    $('#update_description').unbind("click").click(function () {
+        if (validateIt($("#description")) == false) {
+            $('#update_description').removeClass('glyphicon-refresh');
+            $('#update_description').addClass('glyphicon-remove');
+            setTimeout(function () {
+                $('#update_description').removeClass('glyphicon-remove');
+                $('#update_description').addClass('glyphicon-refresh');
+            }, 2000);
+        }
+        else {
+            var selectedItem = $('#description').val();
+            socket.removeAllListeners();
+            var update = {
+                id: id_1,
+                description: selectedItem
+            }
+            socket.emit('update', update);
+            socket.on('update', function (msg) {
+                if (msg == "ready") {
+                    loadDropdown($('#dropdown'),"sweets.json", null, function () {
+                        $('#update_description').removeClass('glyphicon-refresh');
+                        $('#update_description').addClass('glyphicon-ok'); //
+                        setTimeout(function () {
+                            $('#update_description').removeClass('glyphicon-ok');
+                            $('#update_description').addClass('glyphicon-refresh');
+                        }, 2000);
+                        setTimeout(function () {
+                            setDropdownOption(document.getElementById('dropdown'), selectedItem);
+                        }, 10);
+                        function setDropdownOption(dropdown, option) {
+                            for (var i = 0; i < dropdown.options.length; i++) {
+                                if (dropdown.options[i].text == option) {
+                                    dropdown.options[i].selected = true;
+                                    return;
+                                }
+                            }
+                        }
+                    });
+                }
+                else {
+                    $('#update_description').removeClass('glyphicon-refresh');
+                    $('#update_description').addClass('glyphicon-remove'); //
+                    setTimeout(function () {
+                        $('#update_description').removeClass('glyphicon-remove');
+                        $('#update_description').addClass('glyphicon-refresh');
+                    }, 2000);
+                }
+            });
+        }
+    });
+    // Update Examples Button (without validation or dropdown menu update)
+    $('#update_examples').unbind("click").click(function () {
+        socket.removeAllListeners();
+        var update = {
+            id: id_1,
+            examples: $('#examples').val()
+        }
+        socket.emit('update', update);
+        socket.on('update', function (msg) {
+            if (msg == "ready") {
+                $('#update_examples').removeClass('glyphicon-refresh');
+                $('#update_examples').addClass('glyphicon-ok'); //
+                setTimeout(function () {
+                    $('#update_examples').removeClass('glyphicon-ok');
+                    $('#update_examples').addClass('glyphicon-refresh');
+                }, 2000);
+            }
+            else {
+                $('#update_examples').removeClass('glyphicon-refresh');
+                $('#update_examples').addClass('glyphicon-remove'); //
+                setTimeout(function () {
+                    $('#update_examples').removeClass('glyphicon-remove');
+                    $('#update_examples').addClass('glyphicon-refresh');
+                }, 2000);
+            }
+        });
+    });
+
+
+
+    function add2Array(array, newEntry) {
+        var id = array.length + 1;
+        var found = array.some(function (el) {
+            return el === newEntry;
+        });
+        if (!found) {
+            array.push(newEntry);
+        }
+    }
+
+</script>
+
+
+<!--Main Script-->
+<script type="text/javascript" src="../js/main.js"></script>
+</html>
+
+

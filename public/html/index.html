@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Choose Sweets</title>
+    <!-- Shortcut Icon oben im Browserfenster -->
+    <link rel="shortcut icon" href="../assets/shortcut_icon.png">
+    <!-- JQuery-Library -->
+    <script src="../js/jquery-1.11.1.js"></script>
+    <!--Bootstrap-->
+    <script src="../js/bootstrap.min.js"></script>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <!-- Sidebar -->
+    <script src="../js/sidebar.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/sidebar.css"/>
+    <!--<script type="text/javascript" src="../js/sidebar_menueffects.js"></script>-->
+    <!-- Fancy Box -->
+    <script type="text/javascript" src="../js/jquery.fancybox.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.css">
+    <!-- Form Utilities-->
+    <link rel="stylesheet" type="text/css" href="../css/formstyles.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- video-js -->
+    <link href="../css/video-js.css" rel="stylesheet">
+    <script src="../js/video.js"></script>
+    <!--Socket.io-->
+    <script type="text/javascript" src="../js/socket.io-1.3.2.js"></script>
+</head>
+<body>
+
+<!--Header Bar-->
+
+<div id="header_bar">
+    <table id="header_table">
+        <tr>
+            <td style="width: 150px">
+                <div id="navicon"> &#9776; </div>
+            </td>
+            <td style="width: 230px"></td>
+            <td>
+                <div class="header_table_menuitem">
+                    <a id="header_new" href="#" data-original-title="ändern/ergänzen/löschen" class="bottom glyphicon glyphicon-pencil"></a>
+                    <!--<a id="header_new" href="#" class="icon-plus"></a>-->
+                    <a id="header_search" href="#" data-original-title="recherchieren" class="bottom glyphicon glyphicon-search" aria-hidden="true"></a>
+                    <a id="btn3" href="#"></a>
+                    <a id="btn4" href="#"></a>
+                </div>
+            </td>
+            <td id="logo_td">
+                <a id="logo" href="http://www.ict.de"> <img src="../assets/Logo_ICT.png" height="25px"/> </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<!--Sidebar-->
+
+<div id="avatar4navicon"> &#9776; </div>
+<div id="sidebarcontainer">
+    <!--Sidebar Content goes here via AJAX-->
+</div>
+<div id="maincontainer">
+    <!--Main Content goes here via AJAX-->
+</div>
+
+<!--<div id="messagebox"></div>-->
+
+
+</body>
+
+<script>
+    // Param: 1. div-Element, das als Sidebar dient, 2. Navigation icon
+    sidebar($("#sidebarcontainer"), $('#navicon'));
+
+
+    // Load content into #maincontent and #sidebar-content
+
+
+    $("#maincontainer").load("../html/maincontent_slide.html", function(){
+        $('#navicon').hide();
+//        $('#avatar4navicon').hide();
+    });
+//    $("#sidebarcontainer").load("../html/sidebarcontent_slide.html");
+
+    // Header Bar
+    // header will only be displayed on mouse over
+    $('#header_bar').hover(
+            function () {
+                $(this).fadeTo('slow', '1');
+            },
+            function () {
+                $(this).fadeTo('slow', '.001');
+            }
+    );
+</script>
+
+
+<!--Main Script-->
+<script type="text/javascript" src="../js/main.js"></script>
+</html>
+

@@ -1,0 +1,102 @@
+<!--- Created by Fabian Fiess (fabi.images@gmail.com) for ICT AG in October 2014 -->
+<script type="text/javascript" src="../js/sidebar_menueffects.js"></script>
+
+
+<ul id="menu">
+
+    <!-- 1 -->
+    <div id="menuheader">Inhalte hinzufügen</div>
+    <li>
+        <a>
+            <div id="1" class="main_menuitem">Neue Süßigkeit anlegen</div>
+        </a>
+    </li>
+
+
+    <!-- 2 -->
+    <li>
+        <a>
+            <div id="2" class="main_menuitem">Eintrag ändern</div>
+        </a>
+
+        <div id="2_menu">
+            <a>
+                <div id="2_1" class="sub_menuitem">2_1</div>
+            </a>
+
+            <div id="2_1_menu">
+                <a>
+                    <div id="2_1_1" class="sub_sub_menuitem">2_1_1</div>
+                </a>
+            </div>
+            <a>
+                <div id="2_2" class="sub_menuitem">2_2</div>
+            </a>
+
+            <div id="2_2_menu">
+                <a>
+                    <div id="2_2_1" class="sub_sub_menuitem">2_2_1</div>
+                </a>
+                <a>
+                    <div id="2_2_2" class="sub_sub_menuitem">2_2_2</div>
+                </a>
+            </div>
+        </div>
+    </li>
+
+
+
+
+
+
+    <!--&lt;!&ndash; 2 &ndash;&gt;-->
+    <!--<li>-->
+        <!--<a>-->
+            <!--<div id="2" class="main_menuitem"> 2</div>-->
+        <!--</a>-->
+
+        <!--<div id="2_menu">-->
+            <!--<a>-->
+                <!--<div id="2_1" class="sub_menuitem">2_1</div>-->
+            <!--</a>-->
+
+            <!--<div id="2_1_menu">-->
+                <!--<a>-->
+                    <!--<div id="2_1_1" class="sub_sub_menuitem">2_1_1</div>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<a>-->
+                <!--<div id="2_2" class="sub_menuitem">2_2</div>-->
+            <!--</a>-->
+
+            <!--<div id="2_2_menu">-->
+                <!--<a>-->
+                    <!--<div id="2_2_1" class="sub_sub_menuitem">2_2_1</div>-->
+                <!--</a>-->
+                <!--<a>-->
+                    <!--<div id="2_2_2" class="sub_sub_menuitem">2_2_2</div>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</li>-->
+
+
+</ul>
+
+<script>
+    // neu anlegen
+    $('#1').unbind("click").click(function(){
+        $("#maincontainer").load("./maincontent_new.html");
+    });
+
+    // Ändern
+    $('#2').unbind("click").click(function(){
+        $("#maincontainer").load("./maincontent_new_update.html");
+    });
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Textfield and Dropdown interaction</title>
+    <script src="../js/jquery-1.11.1.js"></script>
+    <style></style>
+</head>
+<body>
+<p>Input field must NOT contain a dropdown menu item except the selected one</p>
+
+<select id="dropdown">
+    <option>Favorite sweet</option>
+</select>
+
+
+
+<input type="text" id="textfield" />
+<button id="save">Save</button>
+
+
+</body>
+<script>
+    var jsonString = '[{"id":1,"description":"Homer"},{"id":2,"description":"Bart"}]';
+    var jsObject = JSON.parse(jsonString);
+    var dropdownarray = [];
+
+    // fill dropdown menu and array
+    $.each(jsObject, function (key, val) {
+        $('#dropdown').append("<option>" + val.description + "</option>");
+        dropdownarray.push(val.description);
+    });
+
+    // select from dropdown menu
+    $('#dropdown').change(function() {
+        var selectedItem = $(this).val();
+        // copy selected item into text field
+        $.each(jsObject, function() {
+            if(this.description==selectedItem){
+                $('#textfield').val(selectedItem);
+            }
+        });
+        validateIt($("#textfield"));
+    });
+
+
+    $("#textfield").keyup(function(){
+        validateIt($("#textfield"));
+    });
+
+    $("#save").click(function(e){
+        if (validateIt($("#textfield")) == true)
+            alert ("ready to call another function from here");
+    });
+
+    function validateIt(textfield){
+        var insertedVal=$(textfield).val().trim();
+        var dropdownSelectedItem = $( "#dropdown option:selected" ).text();
+        // does the dropdown menu include the inserted text from textfield?
+        if(include(dropdownarray, insertedVal)) var match = true;
+        else var match = false;
+        // all strings which equal a dropdown item are forbidden except the selected one
+        // and all strings which are too short, too.
+        if(match==true && dropdownSelectedItem != insertedVal || insertedVal.length<3){
+            $(textfield).css("border-color","#db0031");
+            return false;
+        }
+        else{
+            $(textfield).css("border-color","#1cb100");
+            return true;
+        }
+        // CSS
+        function include(arr, obj) {
+            for(var j=0; j<arr.length; j++) {
+                if (arr[j] === obj) return true;
+            }
+        }
+    }
+
+
+</script>
+</html>

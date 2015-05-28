@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <style type="text/css">
+        /* Both file choose and submit button are invisible*/
+        #file1, #submit1 {
+            display: none;
+        }
+
+        /* common label – first for file choose button, then for submit button */
+        .uploadbutton {
+            margin-right: 25px;
+            border: 1px solid #000;
+            padding: 6px 15px 6px 15px;
+            border-radius: 20px;
+            cursor: default;
+            color: #000;
+            text-align: center;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+<form id="form" method="post" enctype="multipart/form-data">
+    <label for="file1" class="uploadbutton" id="label1">Choose File</label>
+    <input type="file" id="file1"/>
+    <input type="submit" id="submit1"/>
+</form>
+
+</body>
+<script>
+    $("#file1").change(function () {
+        if ($("#file1").val() == "") {
+            alert("No file selected");
+        }
+        else {
+            // File chosen
+            var fileChooseBtn = document.getElementById("label1");
+            fileChooseBtn.removeAttribute("for");
+            fileChooseBtn.setAttribute("for","submit1");
+            fileChooseBtn.setAttribute("style", "background-color:green");
+            fileChooseBtn.innerHTML="Upload";
+        }
+    });     // The next click on the label will submit the form
+</script>
+</html>
